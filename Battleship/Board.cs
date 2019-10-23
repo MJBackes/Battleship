@@ -27,7 +27,7 @@ namespace Battleship
             {
                 for(int j = 0; j < Matrix[i].Length; j++)
                 {
-
+                    Matrix[i][j] = new BoardSquare(i,j);
                 }
             }
         }
