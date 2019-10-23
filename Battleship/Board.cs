@@ -14,10 +14,10 @@ namespace Battleship
         //Constr
         public Board()
         {
-            Matrix = new BoardSquare[20][];
+            Matrix = new BoardSquare[21][];
             for(int i = 0; i < Matrix.Length; i++)
             {
-                Matrix[i] = new BoardSquare[20];
+                Matrix[i] = new BoardSquare[21];
             }
         }
         //MembMeth
@@ -27,7 +27,24 @@ namespace Battleship
             {
                 for(int j = 0; j < Matrix[i].Length; j++)
                 {
-                    Matrix[i][j] = new BoardSquare(i,j);
+                    if (i == 0 || j == 0)
+                    {
+                        Matrix[i][j] = new BoardSquare(i, j, true);
+                    }
+                    else
+                    {
+                        Matrix[i][j] = new BoardSquare(i, j);
+                    }
+                }
+            }
+        }
+        public void PrintBoard()
+        {
+            for (int i = 0; i < Matrix.Length; i++)
+            {
+                for (int j = 0; j < Matrix[i].Length; j++)
+                {
+                        Matrix[i][j].PrintOut();
                 }
             }
         }

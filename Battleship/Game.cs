@@ -9,7 +9,8 @@ namespace Battleship
     class Game
     {
         //MembVars
-
+        Player P1;
+        Player P2;
 
         //Constr
 

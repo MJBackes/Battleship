@@ -13,14 +13,21 @@ namespace Battleship
         public int ColNum;
         public bool HasShip;
         public ShipSection ShipSec;
+        private bool IsBoardHeading;
         //Constr
-        public BoardSquare(int row, int col)
+        public BoardSquare(int row, int col, bool heading = false)
         {
             RowNum = row;
             ColNum = col;
+            IsBoardHeading = heading;
         }
         //MembMeth
-        public void BeFilled(Ship ship,int partOfShip)
+        public void BeFilled(Ship ship,ShipSection section)
+        {
+            HasShip = true;
+            ShipSec = section;
+        }
+        public void PrintOut()
         {
 
         }

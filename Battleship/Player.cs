@@ -14,6 +14,7 @@ namespace Battleship
         public Ship MyBattleShip;
         public Ship MySub;
         public Ship MyDestroyer;
+        public int Playernumber;
         //Constr
         public Player()
         {

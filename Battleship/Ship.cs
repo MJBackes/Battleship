@@ -14,6 +14,9 @@ namespace Battleship
         public string Orientation;
         public bool isSunk;
         public int HitsTaken;
+        public List<ShipSection> Sections;
+        public bool IsOwnedByP1;
+        public bool isOwnedByP2;
         //Constr
 
         //MembMeth

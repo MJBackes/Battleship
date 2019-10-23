@@ -19,6 +19,10 @@ namespace Battleship
             isSunk = false;
             StartingSquare = start;
             Orientation = facing;
+            for (int i = 0; i < Length; i++)
+            {
+                Sections.Add(new ShipSection());
+            }
         }
         //MembMeth
     }
