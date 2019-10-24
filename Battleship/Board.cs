@@ -9,27 +9,27 @@ namespace Battleship
     class Board
     {
         //MembVars
-        BoardSquare[][] Matrix;
+        public Square[][] Matrix;
 
         //Constr
         public Board()
         {
-            Matrix = new BoardSquare[21][];
+            Matrix = new Square[21][];
             for(int i = 0; i < Matrix.Length; i++)
             {
-                Matrix[i] = new BoardSquare[21];
+                Matrix[i] = new Square[21];
             }
         }
         //MembMeth
-        private void FillBoard()
+        public void FillBoard()
         {
             for(int i = 0; i < Matrix.Length; i++)
             {
                 for(int j = 0; j < Matrix[i].Length; j++)
                 {
-                    if (i == 0 || j == 0)
+                    if ((i == 0 || j == 0) && i != j)
                     {
-                        Matrix[i][j] = new BoardSquare(i, j, true);
+                        Matrix[i][j] = new LabelSquare(i, j);
                     }
                     else
                     {
@@ -46,7 +46,45 @@ namespace Battleship
                 {
                         Matrix[i][j].PrintOut();
                 }
+                Console.WriteLine();
             }
+        }
+        private int[] ConvertDirectionInputToLoopInfo(int dirInput)
+        {
+            switch (dirInput)
+            {
+                case 1:
+                    return new int[] { -1, 0};
+                case 2:
+                    return new int[] { 1, 0};
+                case 3:
+                    return new int[] { 0, -1};
+                case 4:
+                    return new int[] { 0, 1};
+                default:
+                    return new int[] { 0, 0};
+
+            }
+        }
+        public bool PositionIsValid(int row, int col, int dir,int shipLength)
+        {
+            ///
+            int[] loopInfo = ConvertDirectionInputToLoopInfo(dir);
+            if(row + (loopInfo[0] * (shipLength - 1)) > 20 || row + (loopInfo[0] * (shipLength - 1)) < 1 
+                || col + (loopInfo[1] * (shipLength - 1)) > 20 || col + (loopInfo[1] * (shipLength - 1)) < 1)
+            {
+                return false;
+            }
+            int index = 0;
+            while (index < shipLength)
+            {
+                if (Matrix[row + loopInfo[0] * index][col + loopInfo[1] * index].HasShip)
+                {
+                    return false;
+                }
+                index++;
+            }
+            return true;
         }
     }
 }

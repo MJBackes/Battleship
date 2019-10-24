@@ -12,14 +12,13 @@ namespace Battleship
 
 
         //Constr
-        public Submarine(BoardSquare start, string facing,int playerNumber)
+        public Submarine(int playerNumber)
         {
             Length = 3;
             HitsTaken = 0;
             isSunk = false;
-            StartingSquare = start;
-            Orientation = facing;
-            if(playerNumber == 1)
+            Sections = new List<ShipSection>();
+            if (playerNumber == 1)
             {
                 IsOwnedByP1 = true;
                 isOwnedByP2 = false;

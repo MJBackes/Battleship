@@ -12,14 +12,20 @@ namespace Battleship
         public int Length;
         public BoardSquare StartingSquare;
         public string Orientation;
+        public int OrientationInt;
         public bool isSunk;
         public int HitsTaken;
         public List<ShipSection> Sections;
         public bool IsOwnedByP1;
         public bool isOwnedByP2;
+        public bool HasBeenPlaced;
         //Constr
 
         //MembMeth
+        private void ConvertOrientatonToInt()
+        {
+
+        }
         public bool CheckIfSunk()
         {
             if(HitsTaken >= Length)
@@ -32,6 +38,10 @@ namespace Battleship
         {
             HitsTaken++;
             CheckIfSunk();
+        }
+        public void BePlaced()
+        {
+
         }
     }
 }

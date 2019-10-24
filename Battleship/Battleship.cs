@@ -12,13 +12,22 @@ namespace Battleship
 
 
         //Constr
-        public Battleship(BoardSquare start, string facing)
+        public Battleship(int playerNumber)
         {
             Length = 4;
             HitsTaken = 0;
             isSunk = false;
-            StartingSquare = start;
-            Orientation = facing;
+            Sections = new List<ShipSection>();
+            if (playerNumber == 1)
+            {
+                IsOwnedByP1 = true;
+                isOwnedByP2 = false;
+            }
+            else
+            {
+                IsOwnedByP1 = false;
+                isOwnedByP2 = true;
+            }
             for (int i = 0; i < Length; i++)
             {
                 Sections.Add(new ShipSection());

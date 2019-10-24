@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class BoardSquare
+    class BoardSquare : Square
     {
         //MembVars
-        public int RowNum;
-        public int ColNum;
-        public bool HasShip;
+        
+        
         public ShipSection ShipSec;
-        private bool IsBoardHeading;
         //Constr
-        public BoardSquare(int row, int col, bool heading = false)
+        public BoardSquare(int row, int col)
         {
             RowNum = row;
             ColNum = col;
-            IsBoardHeading = heading;
+            HasBeenGuessed = false;
+            GuessWasHit = false;
         }
         //MembMeth
         public void BeFilled(Ship ship,ShipSection section)
@@ -27,9 +26,22 @@ namespace Battleship
             HasShip = true;
             ShipSec = section;
         }
-        public void PrintOut()
+        public override string getPrintOutput()
         {
-
+            if (HasBeenGuessed)
+            {
+                if (GuessWasHit)
+                {
+                    return " X ";
+                }
+                return " O ";
+            }
+            if (ChosenForPlacement)
+            {
+                ChosenForPlacement = false;
+                return " X ";
+            }
+            return "   ";
         }
     }
 }
