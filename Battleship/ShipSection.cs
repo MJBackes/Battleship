@@ -9,7 +9,7 @@ namespace Battleship
     class ShipSection
     {
         //MembVars
-
+        public bool isHit;
         //Const
 
         //MembMeth

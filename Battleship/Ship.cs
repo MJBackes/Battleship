@@ -11,8 +11,6 @@ namespace Battleship
         //MembVars
         public int Length;
         public BoardSquare StartingSquare;
-        public string Orientation;
-        public int OrientationInt;
         public bool isSunk;
         public int HitsTaken;
         public List<ShipSection> Sections;
@@ -22,9 +20,22 @@ namespace Battleship
         //Constr
 
         //MembMeth
-        private void ConvertOrientatonToInt()
+        private int[] ConvertDirectionInputToLoopInfo(int dirInput)
         {
+            switch (dirInput)
+            {
+                case 1:
+                    return new int[] { -1, 0 };
+                case 2:
+                    return new int[] { 1, 0 };
+                case 3:
+                    return new int[] { 0, -1 };
+                case 4:
+                    return new int[] { 0, 1 };
+                default:
+                    return new int[] { 0, 0 };
 
+            }
         }
         public bool CheckIfSunk()
         {
@@ -39,9 +50,16 @@ namespace Battleship
             HitsTaken++;
             CheckIfSunk();
         }
-        public void BePlaced()
+        public void BePlaced(int[] info,Board board)
         {
-
+            int[] direction = ConvertDirectionInputToLoopInfo(info[3]);
+            int index = 0;
+            while(index < Length)
+            {
+                board.Matrix[info[0] + direction[0] * index][info[1] + direction[1] * index].BeFilled(Sections[index]);
+                index++;
+            }
+            HasBeenPlaced = true;
         }
     }
 }

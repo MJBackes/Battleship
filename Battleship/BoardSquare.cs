@@ -21,25 +21,47 @@ namespace Battleship
             GuessWasHit = false;
         }
         //MembMeth
-        public void BeFilled(Ship ship,ShipSection section)
+        public override void BeFilled(ShipSection section)
         {
             HasShip = true;
             ShipSec = section;
         }
-        public override string getPrintOutput()
+        public void BeGuessed()
         {
-            if (HasBeenGuessed)
+            if(ShipSec != null)
             {
-                if (GuessWasHit)
+                ShipSec.isHit = true;
+            }
+        }
+        public override string getPrintOutput(bool isMyBoard)
+        {
+            if (!isMyBoard)
+            {
+                if (HasBeenGuessed)
                 {
+                    if (GuessWasHit)
+                    {
+                        return " X ";
+                    }
+                    return " O ";
+                }
+            }
+            else
+            {
+                if (HasShip)
+                {
+                    if (ShipSec != null){
+                        if(ShipSec.isHit == true) { 
+                        return " X ";
+                            }
+                    }
+                    return " M ";
+                }
+                if (ChosenForPlacement)
+                {
+                    ChosenForPlacement = false;
                     return " X ";
                 }
-                return " O ";
-            }
-            if (ChosenForPlacement)
-            {
-                ChosenForPlacement = false;
-                return " X ";
             }
             return "   ";
         }

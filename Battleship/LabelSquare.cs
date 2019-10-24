@@ -17,7 +17,7 @@ namespace Battleship
             ColNum = col;
         }
         //MembMeth
-        public override string getPrintOutput()
+        public override string getPrintOutput(bool isMyBoard)
         {
             string output = " ";
             if(RowNum == 0)
@@ -33,6 +33,10 @@ namespace Battleship
                 output += " ";
             }
             return output;
+        }
+        public override void BeFilled(ShipSection section)
+        {
+            
         }
     }
 }

@@ -20,8 +20,10 @@ namespace Battleship
         //MembMeth
         public virtual void PrintOut()
         {
-            Console.Write("|_" + getPrintOutput() + "_|");
+            bool isMyBoard = true;
+            Console.Write("|_" + getPrintOutput(isMyBoard) + "_|");
         }
-        public abstract string getPrintOutput();
+        public abstract string getPrintOutput(bool isMyBoard);
+        public abstract void BeFilled(ShipSection section);
     }
 }

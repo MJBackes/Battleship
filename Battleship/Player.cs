@@ -14,21 +14,34 @@ namespace Battleship
         public Ship MyBattleship;
         public Ship MySub;
         public Ship MyDestroyer;
+        public List<Ship> MyShips;
         public int Playernumber;
         public string Name;
+        public bool HasUnplacedShips;
+        public bool HasShipsAfloat;
         //Constr
         public Player(int playerNumber)
         {
             Playernumber = playerNumber;
             MyBoard = new Board();
+            MyShips = new List<Ship>();
             MyDestroyer = new Destroyer(Playernumber);
+            MyShips.Add(MyDestroyer);
             MySub = new Submarine(Playernumber);
+            MyShips.Add(MySub);
             MyBattleship = new Battleship(Playernumber);
+            MyShips.Add(MyBattleship);
             MyCarrier = new Carrier(Playernumber);
+            MyShips.Add(MyCarrier);
             MyBoard.FillBoard();
-            Name = "Placeholder";
+            HasUnplacedShips = true;
         }
         //MembMeth
+        public void SetPlayerName()
+        {
+            Console.WriteLine($"Player{Playernumber}: Enter your name.");
+            Name = Console.ReadLine();
+        }
         private Ship ConvertShipNumToShip(int shipNum)
         {
             switch (shipNum)
@@ -103,6 +116,34 @@ namespace Battleship
             } while (!MyBoard.PositionIsValid(RowNum,ColNum,DirectionNum,shipNum +1));
             return new int[] { RowNum, ColNum, DirectionNum, shipNum };
         }
-        
+        public void PlaceShip()
+        {
+            int[] placementInfo = GetShipPlacementInput();
+            ConvertShipNumToShip(placementInfo[3]).BePlaced(placementInfo,MyBoard);
+            HasUnplacedShips =  CheckIfAllShipsPlaced();
+        }
+        private bool CheckIfAllShipsPlaced()
+        {
+            foreach(Ship ship in MyShips)
+            {
+                if(ship.HasBeenPlaced == false)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void CheckIfAllShipsSunk()
+        {
+            HasShipsAfloat = false;
+            foreach (Ship ship in MyShips)
+            {
+                if (ship.isSunk == false)
+                {
+                    HasShipsAfloat = true;
+                }
+            }
+            
+        }
     }
 }

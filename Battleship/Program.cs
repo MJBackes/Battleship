@@ -10,13 +10,17 @@ namespace Battleship
     {
         static void Main(string[] args)
         {
-            Board board = new Board();
-            board.FillBoard();
-            //board.Matrix[3][2].ChosenForPlacement = true;
-            board.PrintBoard();
-            Player p = new Player(1);
-            p.GetShipPlacementInput();
-            Console.ReadLine();
+            //Board board = new Board();
+            //board.FillBoard();
+            ////board.Matrix[3][2].ChosenForPlacement = true;
+            //Destroyer dest = new Destroyer(1);
+            //dest.BePlaced(new int[] { 3, 4, 3, 1 }, board);
+            //board.PrintBoard();
+            //Player p = new Player(1);
+            //p.GetShipPlacementInput();
+            //Console.ReadLine();
+            Game game = new Game();
+            game.RunGame();
         }
     }
 }
