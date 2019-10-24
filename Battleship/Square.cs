@@ -17,6 +17,7 @@ namespace Battleship
         public bool ChosenForPlacement;
         public bool isMyBoard;
         public ShipSection ShipSec;
+        public OceanTile OceanSec;
         //Constr
 
         //MembMeth

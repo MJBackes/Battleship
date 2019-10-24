@@ -39,6 +39,10 @@ namespace Battleship
                     return true;
                 }
             }
+            else
+            {
+                OceanSec.wasGuessed = true;
+            }
             return false;
         }
         public override string getPrintOutput()
@@ -58,12 +62,24 @@ namespace Battleship
             {
                 if (HasShip)
                 {
-                    if (ShipSec != null){
-                        if(ShipSec.isHit == true) { 
-                        return " X ";
-                            }
+                    if (ShipSec != null)
+                    {
+                        if (ShipSec.isHit == true)
+                        {
+                            return " X ";
+                        }
                     }
                     return " M ";
+                }
+                else
+                {
+                    if (OceanSec != null)
+                    {
+                        if (OceanSec.wasGuessed)
+                        {
+                            return " O ";
+                        }
+                    }
                 }
                 if (ChosenForPlacement)
                 {

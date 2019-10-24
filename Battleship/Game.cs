@@ -45,17 +45,21 @@ namespace Battleship
             PlaceShips();
             EquatePlayerBoards(P1, P2);
             EquatePlayerBoards(P2, P1);
-            while (P1.HasShipsAfloat && P2.HasShipsAfloat)
+            do
             {
+                P1.CheckIfAllShipsSunk();
                 if (P1.HasShipsAfloat)
                 {
                     P1.TakeTurn();
+                    P1.ShipsIveSunk = P2.UpdateShipsIveSunk();
                 }
+                P2.CheckIfAllShipsSunk();
                 if (P2.HasShipsAfloat)
                 {
                     P2.TakeTurn();
+                    P2.ShipsIveSunk = P1.UpdateShipsIveSunk();
                 }
-            }
+            } while (P1.HasShipsAfloat && P2.HasShipsAfloat);
 
         }
         private void EquatePlayerBoards(Player p1, Player p2)
@@ -68,6 +72,10 @@ namespace Battleship
                     {
                         p2.MyEnemyBoard.Matrix[i][j].BeFilled(p1.MyBoard.Matrix[i][j].ShipSec);
                     }
+                    else
+                    {
+                        p2.MyEnemyBoard.Matrix[i][j].OceanSec = p1.MyBoard.Matrix[i][j].OceanSec;
+                    }
                 }
             }
         }
@@ -78,6 +86,8 @@ namespace Battleship
                 P1.PlaceShip();
                 P2.PlaceShip();
             }
+            P1.MyBoard.FillWithOceanTiles();
+            P2.MyBoard.FillWithOceanTiles();
         }
         public void RunGame()
         {
@@ -111,6 +121,7 @@ namespace Battleship
                 }
                 do
                 {
+                    PrintEndGameText();
                     Console.WriteLine("Play Again? 'Y'/'N'");
                     input = Console.ReadLine().ToLower();
                 } while (input != "y" && input != "n");
@@ -124,5 +135,22 @@ namespace Battleship
                 }
             } while (continuePlaying);
         }
+        private void PrintEndGameText()
+        {
+            Console.Clear();
+            Console.Write($"{P1.Name}:");
+            P1.PrintShipsIveSunk();
+            Console.Write($"{P2.Name}:");
+            P2.PrintShipsIveSunk();
+            if (P1.HasShipsAfloat)
+            {
+                Console.WriteLine($"{P1.Name} Wins.");
+            }
+            else
+            {
+                Console.WriteLine($"{P2.Name} Wins.");
+            }
+        }
     }
+    
 }

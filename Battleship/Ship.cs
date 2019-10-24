@@ -13,6 +13,7 @@ namespace Battleship
         public string Name;
         public BoardSquare StartingSquare;
         public bool isSunk;
+        public bool SinkingHasBeenComunicated;
         public int HitsTaken;
         public List<ShipSection> Sections;
         public bool HasBeenPlaced;
@@ -45,6 +46,7 @@ namespace Battleship
                     return false;
                 }
             }
+            isSunk = true;
             return true;
         }
         public void BeHit()

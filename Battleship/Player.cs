@@ -126,9 +126,9 @@ namespace Battleship
         {
             int[] placementInfo = GetShipPlacementInput();
             ConvertShipNumToShip(placementInfo[3]).BePlaced(placementInfo,MyBoard);
-            HasUnplacedShips =  CheckIfAllShipsPlaced();
+            HasUnplacedShips = CheckIfAnyShipsUnplaced();
         }
-        private bool CheckIfAllShipsPlaced()
+        private bool CheckIfAnyShipsUnplaced()
         {
             foreach(Ship ship in MyShips)
             {
@@ -144,12 +144,25 @@ namespace Battleship
             HasShipsAfloat = false;
             foreach (Ship ship in MyShips)
             {
+                ship.CheckIfSunk();
                 if (ship.isSunk == false)
                 {
                     HasShipsAfloat = true;
                 }
             }
             
+        }
+        public void PrintShipsIveSunk()
+        {
+            if (ShipsIveSunk.Count > 0)
+            {
+                Console.Write("Ships I've sunk: ");
+            }
+            foreach (Ship ship in ShipsIveSunk)
+            {
+                Console.Write(ship.Name + " ");
+            }
+            Console.WriteLine();
         }
         private void ViewEnemyBoard()
         {
@@ -159,11 +172,7 @@ namespace Battleship
             {
                 Console.Clear();
                 MyEnemyBoard.PrintBoard();
-                foreach(Ship ship in ShipsIveSunk)
-                {
-                    Console.Write(ship.Name);
-                }
-                Console.WriteLine();
+                PrintShipsIveSunk();
                 Console.WriteLine("1:Choose a square to shoot.");
                 Console.WriteLine("2:Return to previous screen.");
                 Console.WriteLine("Enter 1 to choose a square to shoot, 2 to return to the previous screen.");
@@ -219,10 +228,12 @@ namespace Battleship
             if (wasHit)
             {
                 Console.WriteLine("Hit");
+                Console.ReadLine();
             }
             else
             {
                 Console.WriteLine("Miss");
+                Console.ReadLine();
             }
         }
         public void TakeTurn()
@@ -254,6 +265,20 @@ namespace Battleship
                         break;
                 }
             } while (!hasCompletedTurn);
+            CheckIfAllShipsSunk();
+        }
+        public List<Ship> UpdateShipsIveSunk ()
+        {
+            List<Ship> output = new List<Ship>();
+            foreach(Ship ship in MyShips)
+            {
+                
+                if (ship.CheckIfSunk())
+                {
+                    output.Add(ship);
+                }
+            }
+            return output;
         }
     }
 }

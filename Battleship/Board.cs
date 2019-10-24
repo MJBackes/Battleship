@@ -39,6 +39,19 @@ namespace Battleship
                 }
             }
         }
+        public void FillWithOceanTiles()
+        {
+            for(int i = 0; i < Matrix.Length; i++)
+            {
+                for(int j = 0; j < Matrix[i].Length; j++)
+                {
+                    if (!Matrix[i][j].HasShip)
+                    {
+                        Matrix[i][j].OceanSec = new OceanTile();
+                    }
+                }
+            }
+        }
         public void PrintBoard()
         {
             for (int i = 0; i < Matrix.Length; i++)
