@@ -15,15 +15,17 @@ namespace Battleship
         public bool GuessWasHit;
         public bool HasShip;
         public bool ChosenForPlacement;
+        public bool isMyBoard;
+        public ShipSection ShipSec;
         //Constr
 
         //MembMeth
         public virtual void PrintOut()
         {
-            bool isMyBoard = true;
-            Console.Write("|_" + getPrintOutput(isMyBoard) + "_|");
+            Console.Write("|_" + getPrintOutput() + "_|");
         }
-        public abstract string getPrintOutput(bool isMyBoard);
+        public abstract string getPrintOutput();
+        public abstract bool BeGuessed();
         public abstract void BeFilled(ShipSection section);
     }
 }

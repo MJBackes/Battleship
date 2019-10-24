@@ -11,14 +11,15 @@ namespace Battleship
         //MembVars
         
         
-        public ShipSection ShipSec;
+        
         //Constr
-        public BoardSquare(int row, int col)
+        public BoardSquare(int row, int col,bool isMine)
         {
             RowNum = row;
             ColNum = col;
             HasBeenGuessed = false;
             GuessWasHit = false;
+            isMyBoard = isMine;
         }
         //MembMeth
         public override void BeFilled(ShipSection section)
@@ -26,14 +27,21 @@ namespace Battleship
             HasShip = true;
             ShipSec = section;
         }
-        public void BeGuessed()
+        public override bool BeGuessed()
         {
+            HasBeenGuessed = true;
             if(ShipSec != null)
             {
-                ShipSec.isHit = true;
+                if (!ShipSec.isHit)
+                {
+                    ShipSec.isHit = true;
+                    GuessWasHit = true;
+                    return true;
+                }
             }
+            return false;
         }
-        public override string getPrintOutput(bool isMyBoard)
+        public override string getPrintOutput()
         {
             if (!isMyBoard)
             {

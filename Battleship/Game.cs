@@ -43,8 +43,33 @@ namespace Battleship
         {
             InstanciatePlayers();
             PlaceShips();
-            
+            EquatePlayerBoards(P1, P2);
+            EquatePlayerBoards(P2, P1);
+            while (P1.HasShipsAfloat && P2.HasShipsAfloat)
+            {
+                if (P1.HasShipsAfloat)
+                {
+                    P1.TakeTurn();
+                }
+                if (P2.HasShipsAfloat)
+                {
+                    P2.TakeTurn();
+                }
+            }
 
+        }
+        private void EquatePlayerBoards(Player p1, Player p2)
+        {
+            for(int i = 0; i < p1.MyBoard.Matrix.Length; i++)
+            {
+                for(int j = 0; j < p1.MyBoard.Matrix[i].Length; j++)
+                {
+                    if (p1.MyBoard.Matrix[i][j].HasShip)
+                    {
+                        p2.MyEnemyBoard.Matrix[i][j].BeFilled(p1.MyBoard.Matrix[i][j].ShipSec);
+                    }
+                }
+            }
         }
         private void PlaceShips()
         {

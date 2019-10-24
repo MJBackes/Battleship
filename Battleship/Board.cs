@@ -10,10 +10,11 @@ namespace Battleship
     {
         //MembVars
         public Square[][] Matrix;
-
+        public bool isMyBoard;
         //Constr
-        public Board()
+        public Board(bool isMine)
         {
+            isMyBoard = isMine;
             Matrix = new Square[21][];
             for(int i = 0; i < Matrix.Length; i++)
             {
@@ -33,7 +34,7 @@ namespace Battleship
                     }
                     else
                     {
-                        Matrix[i][j] = new BoardSquare(i, j);
+                        Matrix[i][j] = new BoardSquare(i, j, isMyBoard);
                     }
                 }
             }

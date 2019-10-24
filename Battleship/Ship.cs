@@ -10,12 +10,11 @@ namespace Battleship
     {
         //MembVars
         public int Length;
+        public string Name;
         public BoardSquare StartingSquare;
         public bool isSunk;
         public int HitsTaken;
         public List<ShipSection> Sections;
-        public bool IsOwnedByP1;
-        public bool isOwnedByP2;
         public bool HasBeenPlaced;
         //Constr
 
@@ -39,11 +38,14 @@ namespace Battleship
         }
         public bool CheckIfSunk()
         {
-            if(HitsTaken >= Length)
+            foreach(ShipSection section in Sections)
             {
-                return true;
+                if (!section.isHit)
+                {
+                    return false;
+                }
             }
-            return false;
+            return true;
         }
         public void BeHit()
         {
@@ -52,7 +54,7 @@ namespace Battleship
         }
         public void BePlaced(int[] info,Board board)
         {
-            int[] direction = ConvertDirectionInputToLoopInfo(info[3]);
+            int[] direction = ConvertDirectionInputToLoopInfo(info[2]);
             int index = 0;
             while(index < Length)
             {

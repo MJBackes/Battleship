@@ -15,19 +15,10 @@ namespace Battleship
         public Destroyer(int playerNumber)
         {
             Length = 2;
+            Name = "Destroyer";
             HitsTaken = 0;
             isSunk = false;
             Sections = new List<ShipSection>();
-            if (playerNumber == 1)
-            {
-                IsOwnedByP1 = true;
-                isOwnedByP2 = false;
-            }
-            else
-            {
-                IsOwnedByP1 = false;
-                isOwnedByP2 = true;
-            }
             for (int i = 0; i < Length; i++)
             {
                 Sections.Add(new ShipSection());
