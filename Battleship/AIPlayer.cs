@@ -13,6 +13,7 @@ namespace Battleship
         private int[] LastHit;
         private int[] PreviousLastHit;
         private int[] LastGuess;
+        private int[] PreviousLastGuess;
         private List<Ship> LastShipsIveSunk;
         //constr
         public AIPlayer(int playerNumber,int size)
@@ -37,12 +38,24 @@ namespace Battleship
             MyEnemyBoard.FillBoard();
             HasUnplacedShips = true;
             HasShipsAfloat = true;
-            LastGuess = new int[] { 0,0};
+            LastGuess = new int[2];
+            PreviousLastGuess = new int[2];
+            if(PlayerNumber == 1)
+            {
+                DesyncRandoms();
+            }
         }
         //MembMeth
         public override void SetPlayerName()
         {
             Name = "AIPlayer" + PlayerNumber;
+        }
+        public void DesyncRandoms()
+        {
+            for(int i = generateRandomInt(5); i < generateRandomInt(BoardSize) * generateRandomInt(BoardSize); i++)
+            {
+                generateRandomInt(i);
+            }
         }
         private int generateRandomInt(int max)
         {
@@ -66,110 +79,167 @@ namespace Battleship
         {
             int row;
             int col;
-            int[] dir;
             if (LastHit == null)
             {
-                do
-                {
-                    row = generateRandomInt(BoardSize);
-                    col = generateRandomInt(BoardSize);
-                } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
-                return new int[] { row, col };
+                return ifNoLastHit();
             }
             else
             {
                 if (PreviousLastHit == null)
                 {
-                    do
-                    {
-                        dir = MyBoard.ConvertDirectionInputToLoopInfo(generateRandomInt(4));
-                        row = LastHit[0] + dir[0];
-                        col = LastHit[1] + dir[1];
-                    } while (row < 1 || row > BoardSize || col < 1 || col > BoardSize || MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
-                    return new int[] { row, col };
+                    return ifOnlyOneHit();
                 }
                 else
                 {
+                    if (LastTwoGuessesWereMisses())
+                    {
+                        ifOnlyOneHit();
+                    }
                     if (LastHit[0] != LastGuess[0] || LastHit[1] != LastGuess[1])
                     {
                         if (LastHit[0] == PreviousLastHit[0])
                         {
-                            row = LastHit[0];
-                            col = LastHit[1];
-                            col += (LastHit[1] - PreviousLastHit[1]);
-                            do
-                            {
-                                col -= (LastHit[1] - PreviousLastHit[1]);
-                                if(col > BoardSize || col < 1)
-                                {
-                                    LastHit = null;
-                                    PreviousLastHit = null;
-                                    return GetShotPlacementInfo();
-                                }
-                            } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
+                            return ifSharedRowMethodLedToMiss();
                         }
                         else
                         {
-                            col = LastHit[1];
-                            row = LastHit[0];
-                            row += (LastHit[0] - PreviousLastHit[0]);
-                            do
-                            {
-                                row -= (LastHit[0] - PreviousLastHit[0]);
-                                if (row > BoardSize || row < 1)
-                                {
-                                    LastHit = null;
-                                    PreviousLastHit = null;
-                                    return GetShotPlacementInfo();
-                                }
-                            } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
-                        }
-                        if (col > BoardSize || col < 1 || row > BoardSize || row < 1)
-                        {
-                            LastHit = null;
-                            PreviousLastHit = null;
-                            return GetShotPlacementInfo();
+                            return ifSharedColMethodLedToMiss();
                         }
                     }
                     else
                     {
                         if (LastHit[0] == PreviousLastHit[0])
                         {
-                            row = LastHit[0];
-                            col = LastHit[1];
-                            col += (LastHit[1] - PreviousLastHit[1]);
-                            if (col < 1 || col > BoardSize)
-                            {
-                                do
-                                {
-                                    col -= (LastHit[1] - PreviousLastHit[1]);
-                                } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed || row < 1 || row > BoardSize
-                                        || col < 1 || col > BoardSize);
-                            }
+                            return ifLastTwoHitsSharedRow();
                         }
                         else
                         {
-                            col = LastHit[1];
-                            row = LastHit[0];
-                            row += (LastHit[0] - PreviousLastHit[0]);
-                            if (row < 1 || row > 20)
-                            {
-                                do
-                                {
-                                    row -= (LastHit[0] - PreviousLastHit[0]);
-                                } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed || row < 1 || row > BoardSize
-                                        || col < 1 || col > BoardSize);
-                            }
+                            return ifLastTwoHitsSharedCol();
                         }
                     }
                 }
             }
+        }
+        private bool LastTwoGuessesWereMisses()
+        {
+            return LastHit[0] == LastGuess[0]
+                    || LastHit[0] == PreviousLastGuess[0]
+                    || LastHit[1] == LastGuess[1]
+                    || LastHit[1] == PreviousLastGuess[1];
+        }
+        private int[] resetLastHit()
+        {
+            LastHit = null;
+            PreviousLastHit = null;
+            return GetShotPlacementInfo();
+        }
+        private int[] ifNoLastHit()
+        {
+            int row;
+            int col;
+            do
+            {
+                row = generateRandomInt(BoardSize);
+                col = generateRandomInt(BoardSize);
+            } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
+            return new int[] { row, col };
+        }
+        private int[] ifOnlyOneHit()
+        {
+            int row;
+            int col;
+            int[] dir;
+            int count = 1;
+            do
+            {
+                dir = MyBoard.ConvertDirectionInputToLoopInfo(generateRandomInt(4));
+                row = LastHit[0] + dir[0];
+                col = LastHit[1] + dir[1];
+                count++;
+                if(count > 4)
+                {
+                    return resetLastHit();
+                }
+            } while (row < 1 || row > BoardSize || col < 1 || col > BoardSize || MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
+            return new int[] { row, col };
+        }
+        private int[] ifLastTwoHitsSharedRow()
+        {
+            int row;
+            int col;
+            row = LastHit[0];
+            col = LastHit[1];
+            col += (LastHit[1] - PreviousLastHit[1]);
+            if (col < 1 || col > BoardSize)
+            {
+                do
+                {
+                    col -= (LastHit[1] - PreviousLastHit[1]);
+                    if(col > BoardSize || col < 1)
+                    {
+                        return resetLastHit();
+                    }
+                } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
+            }
+            return new int[] { row, col };
+        }
+        private int[] ifSharedRowMethodLedToMiss()
+        {
+            int row;
+            int col;
+            row = LastHit[0];
+            col = LastHit[1];
+            do
+            {
+                col -= (LastHit[1] - PreviousLastHit[1]);
+                if (col > BoardSize || col < 1)
+                {
+                    return resetLastHit();
+                }
+            } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
+            return new int[] { row, col };
+        }
+        private int[] ifLastTwoHitsSharedCol()
+        {
+            int row;
+            int col;
+            col = LastHit[1];
+            row = LastHit[0];
+            row += (LastHit[0] - PreviousLastHit[0]);
+            if (row < 1 || row > BoardSize)
+            {
+                do
+                {
+                    row -= (LastHit[0] - PreviousLastHit[0]);
+                    if(row > BoardSize || row < 1)
+                    {
+                        return resetLastHit();
+                    }
+                } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
+            }
+            return new int[] { row, col };
+        }
+        private int[] ifSharedColMethodLedToMiss()
+        {
+            int row;
+            int col;
+            col = LastHit[1];
+            row = LastHit[0];
+            do
+            {
+                row -= (LastHit[0] - PreviousLastHit[0]);
+                if (row > BoardSize || row < 1)
+                {
+                    return resetLastHit();
+                }
+            } while (MyEnemyBoard.Matrix[row][col].HasBeenGuessed);
             return new int[] { row, col };
         }
         public override void TakeShot()
         {
             int[] info = GetShotPlacementInfo();
             bool wasHit = MyEnemyBoard.Matrix[info[0]][info[1]].BeGuessed();
+            PreviousLastGuess = new int[] { LastGuess[0], LastGuess[1] };
             LastGuess = new int[] { info[0], info[1] };
             if (wasHit)
             {

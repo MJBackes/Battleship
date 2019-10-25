@@ -32,6 +32,13 @@ namespace Battleship
             P1.SetPlayerName();
             P2.SetPlayerName();
         }
+        public void TwoAIs()
+        {
+            P1 = new AIPlayer(1, BoardSize);
+            P2 = new AIPlayer(2, BoardSize);
+            P1.SetPlayerName();
+            P2.SetPlayerName();
+        }
         public void InstanciatePlayers()
         {
             string input;
@@ -40,9 +47,10 @@ namespace Battleship
                 Console.Clear();
                 Console.WriteLine("1.Single Player.");
                 Console.WriteLine("2.2 Player");
-                Console.WriteLine("Enter 1 for single player, 2 for multiplayer.");
+                Console.WriteLine("3.2 AI");
+                Console.WriteLine("Enter 1 for single player, 2 for multiplayer,3 for 2 AIs.");
                 input = Console.ReadLine();
-            } while (input != "1" && input != "2");
+            } while (input != "1" && input != "2" && input != "3");
             switch (input)
             {
                 case "1":
@@ -50,6 +58,9 @@ namespace Battleship
                     break;
                 case "2":
                     TwoPlayers();
+                    break;
+                case "3":
+                    TwoAIs();
                     break;
                 default:
                     InstanciatePlayers();
@@ -91,7 +102,7 @@ namespace Battleship
                     BoardSize = 20;
                     break;
                 default:
-                    InstanciatePlayers();
+                    BoardSize = 20 ;
                     break;
             }
         }
@@ -121,7 +132,17 @@ namespace Battleship
                     P2.TakeTurn();
                     P2.ShipsIveSunk = P1.UpdateShipsIveSunk();
                 }
+                PrintBoardsIfAIGame();
             } while (P1.HasShipsAfloat && P2.HasShipsAfloat);
+        }
+        private void PrintBoardsIfAIGame()
+        {
+            Console.Clear();
+            Console.WriteLine(P1.Name + "'s Board:");
+            P1.MyBoard.PrintBoard();
+            Console.WriteLine(P2.Name + "'s Board:");
+            P2.MyBoard.PrintBoard();
+            Console.ReadLine();
         }
         private void EquatePlayerBoards(Player p1, Player p2)
         {
