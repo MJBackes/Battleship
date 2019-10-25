@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class OceanTile
+    class OceanTile : Tile
     {
-        public bool wasGuessed = false;
+        
     }
 }

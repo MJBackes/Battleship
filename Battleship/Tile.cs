@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class ShipSection : Tile
+    abstract class Tile
     {
-        //MembVars
-        
-        //Const
-
-        //MembMeth
-
-
+        public bool wasGuessed = false;
+        public bool isHit;
     }
 }

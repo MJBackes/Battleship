@@ -214,6 +214,8 @@ namespace Battleship
                 do
                 {
                     Console.WriteLine($"{Name}:Enter a Column number :");
+                    
+                    
                     inputIsInt = int.TryParse(Console.ReadLine(), out ColNum);
                 } while (!inputIsInt || ColNum < 1 || ColNum > 20);
                 hasLooped = true;

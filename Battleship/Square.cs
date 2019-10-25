@@ -16,8 +16,7 @@ namespace Battleship
         public bool HasShip;
         public bool ChosenForPlacement;
         public bool isMyBoard;
-        public ShipSection ShipSec;
-        public OceanTile OceanSec;
+        public Tile MyTile;
         //Constr
 
         //MembMeth
@@ -25,8 +24,72 @@ namespace Battleship
         {
             Console.Write("|_" + getPrintOutput() + "_|");
         }
-        public abstract string getPrintOutput();
-        public abstract bool BeGuessed();
-        public abstract void BeFilled(ShipSection section);
+        public virtual void BeFilled(Tile tile)
+        {
+            HasShip = true;
+            MyTile = tile;
+        }
+        public virtual bool BeGuessed()
+        {
+            HasBeenGuessed = true;
+            if (MyTile.GetType().ToString() == "Battleship.ShipSection")
+            {
+                if (!MyTile.isHit)
+                {
+                    MyTile.isHit = true;
+                    GuessWasHit = true;
+                    return true;
+                }
+            }
+            else
+            {
+                MyTile.wasGuessed = true;
+            }
+            return false;
+        }
+        public virtual string getPrintOutput()
+        {
+            if (!isMyBoard)
+            {
+                if (HasBeenGuessed)
+                {
+                    if (GuessWasHit)
+                    {
+                        return " X ";
+                    }
+                    return " O ";
+                }
+            }
+            else
+            {
+                if (HasShip)
+                {
+                    if (MyTile.GetType().ToString() == "Battleship.ShipSection")
+                    {
+                        if (MyTile.isHit == true)
+                        {
+                            return " X ";
+                        }
+                    }
+                    return " M ";
+                }
+                else
+                {
+                    if (MyTile != null)
+                    {
+                        if (MyTile.wasGuessed)
+                        {
+                            return " O ";
+                        }
+                    }
+                }
+                if (ChosenForPlacement)
+                {
+                    ChosenForPlacement = false;
+                    return " X ";
+                }
+            }
+            return "   ";
+        }
     }
 }

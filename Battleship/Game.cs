@@ -70,11 +70,11 @@ namespace Battleship
                 {
                     if (p1.MyBoard.Matrix[i][j].HasShip)
                     {
-                        p2.MyEnemyBoard.Matrix[i][j].BeFilled(p1.MyBoard.Matrix[i][j].ShipSec);
+                        p2.MyEnemyBoard.Matrix[i][j].BeFilled(p1.MyBoard.Matrix[i][j].MyTile);
                     }
                     else
                     {
-                        p2.MyEnemyBoard.Matrix[i][j].OceanSec = p1.MyBoard.Matrix[i][j].OceanSec;
+                        p2.MyEnemyBoard.Matrix[i][j].MyTile = p1.MyBoard.Matrix[i][j].MyTile;
                     }
                 }
             }

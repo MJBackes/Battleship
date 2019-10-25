@@ -34,7 +34,7 @@ namespace Battleship
             }
             return output;
         }
-        public override void BeFilled(ShipSection section)
+        public override void BeFilled(Tile tile)
         {
             
         }

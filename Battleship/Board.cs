@@ -47,7 +47,7 @@ namespace Battleship
                 {
                     if (!Matrix[i][j].HasShip)
                     {
-                        Matrix[i][j].OceanSec = new OceanTile();
+                        Matrix[i][j].MyTile = new OceanTile();
                     }
                 }
             }

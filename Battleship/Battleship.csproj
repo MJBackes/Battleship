@@ -58,6 +58,7 @@
     <Compile Include="ShipSection.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Submarine.cs" />
+    <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
