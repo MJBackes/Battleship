@@ -45,6 +45,11 @@ namespace Battleship
             PlaceShips();
             EquatePlayerBoards(P1, P2);
             EquatePlayerBoards(P2, P1);
+            MainGame();
+
+        }
+        private void MainGame()
+        {
             do
             {
                 P1.CheckIfAllShipsSunk();
@@ -60,7 +65,6 @@ namespace Battleship
                     P2.ShipsIveSunk = P1.UpdateShipsIveSunk();
                 }
             } while (P1.HasShipsAfloat && P2.HasShipsAfloat);
-
         }
         private void EquatePlayerBoards(Player p1, Player p2)
         {

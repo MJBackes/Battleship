@@ -116,6 +116,7 @@ namespace Battleship
                     Console.WriteLine("3:Horizontal Left");
                     Console.WriteLine("4:Horizontal Right");
 
+                    
                     inputIsInt = int.TryParse(Console.ReadLine(), out DirectionNum);
                 } while (!inputIsInt || DirectionNum < 1 || DirectionNum > 4);
                 hasLooped = true;
@@ -173,6 +174,7 @@ namespace Battleship
                 Console.Clear();
                 MyEnemyBoard.PrintBoard();
                 PrintShipsIveSunk();
+                Console.WriteLine(Name);
                 Console.WriteLine("1:Choose a square to shoot.");
                 Console.WriteLine("2:Return to previous screen.");
                 Console.WriteLine("Enter 1 to choose a square to shoot, 2 to return to the previous screen.");
@@ -185,6 +187,7 @@ namespace Battleship
                         break;
                     case "2":
                         TakeTurn();
+                        hasCompletedTurn = true;
                         break;
                     default:
                         hasCompletedTurn = false;
@@ -246,6 +249,7 @@ namespace Battleship
             {
                 hasCompletedTurn = false;
                 Console.Clear();
+                Console.WriteLine(Name);
                 Console.WriteLine("1:View my board.");
                 Console.WriteLine("2:View enemy board");
                 Console.WriteLine("Enter 1 to look at your own board, 2 to look at the other player's board.");
@@ -267,7 +271,6 @@ namespace Battleship
                         break;
                 }
             } while (!hasCompletedTurn);
-            CheckIfAllShipsSunk();
         }
         public List<Ship> UpdateShipsIveSunk ()
         {

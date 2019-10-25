@@ -46,42 +46,54 @@ namespace Battleship
                 MyTile.wasGuessed = true;
             }
             return false;
+        
+        }
+        protected string GetEnemyBoardPrintout()
+        {
+            if (HasBeenGuessed)
+            {
+                if (GuessWasHit)
+                {
+                    return " X ";
+                }
+                return " O ";
+            }
+            return "   ";
+        }
+        protected string GetMyShipsPrintout()
+        {
+                if (MyTile.isHit == true)
+                {
+                    return " X ";
+                }
+            return " M ";
+        }
+        protected string GetMyOceanTilePrintout()
+        {
+            if (MyTile != null)
+            {
+                if (MyTile.wasGuessed)
+                {
+                    return " O ";
+                }
+            }
+            return "   ";
         }
         public virtual string getPrintOutput()
         {
             if (!isMyBoard)
             {
-                if (HasBeenGuessed)
-                {
-                    if (GuessWasHit)
-                    {
-                        return " X ";
-                    }
-                    return " O ";
-                }
+                return GetEnemyBoardPrintout();
             }
             else
             {
                 if (HasShip)
                 {
-                    if (MyTile.GetType().ToString() == "Battleship.ShipSection")
-                    {
-                        if (MyTile.isHit == true)
-                        {
-                            return " X ";
-                        }
-                    }
-                    return " M ";
+                    return GetMyShipsPrintout();
                 }
                 else
                 {
-                    if (MyTile != null)
-                    {
-                        if (MyTile.wasGuessed)
-                        {
-                            return " O ";
-                        }
-                    }
+                   return GetMyOceanTilePrintout();
                 }
                 if (ChosenForPlacement)
                 {

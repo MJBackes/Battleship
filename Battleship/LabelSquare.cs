@@ -34,13 +34,5 @@ namespace Battleship
             }
             return output;
         }
-        public override void BeFilled(Tile tile)
-        {
-            
-        }
-        public override bool BeGuessed()
-        {
-            return true;
-        }
     }
 }
