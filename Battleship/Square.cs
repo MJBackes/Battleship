@@ -23,6 +23,8 @@ namespace Battleship
         public virtual void PrintOut()
         {
             Console.Write("|_" + getPrintOutput() + "_|");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public virtual void BeFilled(Tile tile)
         {
@@ -54,8 +56,12 @@ namespace Battleship
             {
                 if (GuessWasHit)
                 {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     return " X ";
                 }
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.White;
                 return " O ";
             }
             return "   ";
@@ -64,8 +70,12 @@ namespace Battleship
         {
                 if (MyTile.isHit == true)
                 {
-                    return " X ";
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Black;
+                return " X ";
                 }
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.White;
             return " M ";
         }
         protected string GetMyOceanTilePrintout()
@@ -74,6 +84,8 @@ namespace Battleship
             {
                 if (MyTile.wasGuessed)
                 {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.White;
                     return " O ";
                 }
             }
@@ -98,6 +110,8 @@ namespace Battleship
                 if (ChosenForPlacement)
                 {
                     ChosenForPlacement = false;
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     return " X ";
                 }
             }
