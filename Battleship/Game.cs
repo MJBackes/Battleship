@@ -81,9 +81,12 @@ namespace Battleship
                 Console.WriteLine("2. 20x20 Board.");
                 Console.WriteLine("Enter 1 for a 10x10 board or 2 for a 20x20 board.");
                 input = Console.ReadLine();
-            } while (input != "1" && input != "2");
+            } while (input != "1" && input != "2" && input != "-1");
             switch (input)
             {
+                case "-1":
+                    BoardSize = 5;
+                    break;
                 case "1":
                     BoardSize = 10;
                     break;

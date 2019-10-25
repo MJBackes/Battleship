@@ -175,6 +175,7 @@ namespace Battleship
             else
             {
                 Console.WriteLine("Miss");
+                
                 Console.ReadLine();
             }
         }
