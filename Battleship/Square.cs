@@ -91,7 +91,7 @@ namespace Battleship
                 {
                     return GetMyShipsPrintout();
                 }
-                else
+                else if(MyTile != null && MyTile.GetType().ToString() == "Battleship.OceanTile")
                 {
                    return GetMyOceanTilePrintout();
                 }

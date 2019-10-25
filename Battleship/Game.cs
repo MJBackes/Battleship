@@ -11,20 +11,51 @@ namespace Battleship
         //MembVars
         Player P1;
         Player P2;
-
+        int BoardSize;
         //Constr
         public Game()
         {
 
         }
         //MembMeth
-        public void InstanciatePlayers()
+        public void TwoPlayers()
         {
-            P1 = new Player(1);
-            P2 = new Player(2);
+            P1 = new HumanPlayer(1,BoardSize);
+            P2 = new HumanPlayer(2, BoardSize);
             P1.SetPlayerName();
             P2.SetPlayerName();
         } 
+        public void SinglePlayer()
+        {
+            P1 = new HumanPlayer(1, BoardSize);
+            P2 = new AIPlayer(2, BoardSize);
+            P1.SetPlayerName();
+            P2.SetPlayerName();
+        }
+        public void InstanciatePlayers()
+        {
+            string input;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("1.Single Player.");
+                Console.WriteLine("2.2 Player");
+                Console.WriteLine("Enter 1 for single player, 2 for multiplayer.");
+                input = Console.ReadLine();
+            } while (input != "1" && input != "2");
+            switch (input)
+            {
+                case "1":
+                    SinglePlayer();
+                    break;
+                case "2":
+                    TwoPlayers();
+                    break;
+                default:
+                    InstanciatePlayers();
+                    break;
+            }
+        }
         private void DisplayRules()
         {
             Console.Clear();
@@ -39,8 +70,34 @@ namespace Battleship
             Console.WriteLine("When all parts of a ship have been damaged, the ship is sunk.");
             Console.WriteLine("Play continues until one player has all their ships sunk.");
         }
+        public void ChooseBoardSize()
+        {
+            
+            string input;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("1. 10x10 Board.");
+                Console.WriteLine("2. 20x20 Board.");
+                Console.WriteLine("Enter 1 for a 10x10 board or 2 for a 20x20 board.");
+                input = Console.ReadLine();
+            } while (input != "1" && input != "2");
+            switch (input)
+            {
+                case "1":
+                    BoardSize = 10;
+                    break;
+                case "2":
+                    BoardSize = 20;
+                    break;
+                default:
+                    InstanciatePlayers();
+                    break;
+            }
+        }
         public void Start()
         {
+            ChooseBoardSize();
             InstanciatePlayers();
             PlaceShips();
             EquatePlayerBoards(P1, P2);

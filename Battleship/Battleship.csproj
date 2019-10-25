@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIPlayer.cs" />
     <Compile Include="Battleship.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardSquare.cs" />
     <Compile Include="Carrier.cs" />
     <Compile Include="Destroyer.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="HumanPlayer.cs" />
     <Compile Include="LabelSquare.cs" />
     <Compile Include="OceanTile.cs" />
     <Compile Include="Player.cs" />

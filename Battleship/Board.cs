@@ -11,14 +11,16 @@ namespace Battleship
         //MembVars
         public Square[][] Matrix;
         public bool isMyBoard;
+        public int Size;
         //Constr
-        public Board(bool isMine)
+        public Board(bool isMine, int size)
         {
             isMyBoard = isMine;
-            Matrix = new Square[21][];
+            Size = size;
+            Matrix = new Square[size + 1][];
             for(int i = 0; i < Matrix.Length; i++)
             {
-                Matrix[i] = new Square[21];
+                Matrix[i] = new Square[size + 1];
             }
         }
         //MembMeth
@@ -63,7 +65,7 @@ namespace Battleship
                 Console.WriteLine();
             }
         }
-        private int[] ConvertDirectionInputToLoopInfo(int dirInput)
+        public int[] ConvertDirectionInputToLoopInfo(int dirInput)
         {
             switch (dirInput)
             {
@@ -84,8 +86,8 @@ namespace Battleship
         {
             ///
             int[] loopInfo = ConvertDirectionInputToLoopInfo(dir);
-            if(row + (loopInfo[0] * (shipLength - 1)) > 20 || row + (loopInfo[0] * (shipLength - 1)) < 1 
-                || col + (loopInfo[1] * (shipLength - 1)) > 20 || col + (loopInfo[1] * (shipLength - 1)) < 1)
+            if(row + (loopInfo[0] * (shipLength - 1)) > Size || row + (loopInfo[0] * (shipLength - 1)) < 1 
+                || col + (loopInfo[1] * (shipLength - 1)) > Size || col + (loopInfo[1] * (shipLength - 1)) < 1)
             {
                 return false;
             }
