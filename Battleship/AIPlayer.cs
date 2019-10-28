@@ -93,9 +93,9 @@ namespace Battleship
                 {
                     if (LastTwoGuessesWereMisses())
                     {
-                        ifOnlyOneHit();
+                        return ifOnlyOneHit();
                     }
-                    if (LastHit[0] != LastGuess[0] || LastHit[1] != LastGuess[1])
+                    else if (LastHit[0] != LastGuess[0] || LastHit[1] != LastGuess[1])
                     {
                         if (LastHit[0] == PreviousLastHit[0])
                         {
@@ -149,14 +149,14 @@ namespace Battleship
             int row;
             int col;
             int[] dir;
-            int count = 1;
+            int count = 0;
             do
             {
-                dir = MyBoard.ConvertDirectionInputToLoopInfo(generateRandomInt(4));
+                dir = MyBoard.ConvertDirectionInputToLoopInfo(count);
                 row = LastHit[0] + dir[0];
                 col = LastHit[1] + dir[1];
                 count++;
-                if(count > 4)
+                if(count > 5)
                 {
                     return resetLastHit();
                 }

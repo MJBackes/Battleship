@@ -121,13 +121,13 @@ namespace Battleship
             do
             {
                 P1.CheckIfAllShipsSunk();
-                if (P1.HasShipsAfloat)
+                if (P1.HasShipsAfloat && P2.HasShipsAfloat)
                 {
                     P1.TakeTurn();
                     P1.ShipsIveSunk = P2.UpdateShipsIveSunk();
                 }
                 P2.CheckIfAllShipsSunk();
-                if (P2.HasShipsAfloat)
+                if (P2.HasShipsAfloat && P1.HasShipsAfloat)
                 {
                     P2.TakeTurn();
                     P2.ShipsIveSunk = P1.UpdateShipsIveSunk();
