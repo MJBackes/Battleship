@@ -77,8 +77,6 @@ namespace Battleship
         }
         public override int[] GetShotPlacementInfo()
         {
-            int row;
-            int col;
             if (LastHit == null)
             {
                 return ifNoLastHit();
@@ -122,10 +120,10 @@ namespace Battleship
         }
         private bool LastTwoGuessesWereMisses()
         {
-            return LastHit[0] == LastGuess[0]
+            return !(LastHit[0] == LastGuess[0]
                     || LastHit[0] == PreviousLastGuess[0]
                     || LastHit[1] == LastGuess[1]
-                    || LastHit[1] == PreviousLastGuess[1];
+                    || LastHit[1] == PreviousLastGuess[1]);
         }
         private int[] resetLastHit()
         {
@@ -174,7 +172,7 @@ namespace Battleship
             {
                 do
                 {
-                    col -= (LastHit[1] - PreviousLastHit[1]);
+                    col -= ((LastHit[1] - PreviousLastHit[1])/Math.Abs(LastHit[1] - PreviousLastHit[1]));
                     if(col > BoardSize || col < 1)
                     {
                         return resetLastHit();
@@ -210,7 +208,7 @@ namespace Battleship
             {
                 do
                 {
-                    row -= (LastHit[0] - PreviousLastHit[0]);
+                    row -= ((LastHit[0] - PreviousLastHit[0]) / Math.Abs(LastHit[0] - PreviousLastHit[0]));
                     if(row > BoardSize || row < 1)
                     {
                         return resetLastHit();

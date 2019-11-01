@@ -62,6 +62,7 @@ namespace Battleship
                 {
                         Matrix[i][j].PrintOut();
                 }
+                Console.BackgroundColor = ConsoleColor.Black;
                 Console.WriteLine();
             }
         }

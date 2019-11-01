@@ -11,9 +11,9 @@ namespace Battleship
         //MembVars
         public int Length;
         public string Name;
-        public BoardSquare StartingSquare;
+       // public BoardSquare StartingSquare;
         public bool isSunk;
-        public bool SinkingHasBeenComunicated;
+        //public bool SinkingHasBeenComunicated;
         public int HitsTaken;
         public List<ShipSection> Sections;
         public bool HasBeenPlaced;
