@@ -132,7 +132,10 @@ namespace Battleship
                     P2.TakeTurn();
                     P2.ShipsIveSunk = P1.UpdateShipsIveSunk();
                 }
-                PrintBoardsIfAIGame();
+                if (P1.GetType().ToString() == "Battleship.AIPlayer" && P1.GetType() == P2.GetType())
+                {
+                    PrintBoardsIfAIGame();
+                }
             } while (P1.HasShipsAfloat && P2.HasShipsAfloat);
         }
         private void PrintBoardsIfAIGame()
